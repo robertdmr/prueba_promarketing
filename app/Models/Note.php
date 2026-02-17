@@ -19,4 +19,8 @@ class Note extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function notedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_noted_id', 'id');
+    }
 }

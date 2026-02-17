@@ -18,7 +18,7 @@ new class extends Component
 
     public function mount()
     {
-        $this->notes = Note::with('user')->get()->toArray();
+        $this->notes = Note::with(['user', 'notedBy'])->get()->toArray();
     }
 
     public function createNote()
@@ -33,7 +33,7 @@ new class extends Component
                 'date' => now(),
             ]);
 
-            $this->notes = Note::with('user')->get()->toArray();
+            $this->notes = Note::with(['user', 'notedBy'])->get()->toArray();
             $this->newNoteContent = '';
             $this->newNoteUserId = '';
         }
@@ -80,6 +80,8 @@ new class extends Component
                     <strong>{{ $note['user']['name'] }}</strong> @if($note['aproved']==1)
                     <flux:icon.check /> @endif <br>
                     {{ $note['content'] . ' - ' . \Carbon\Carbon::parse($note['date'])->format('d/m/Y') }}
+                    <br>
+                    <em><small>Autor: {{ $note['noted_by']['name'] }}</small></em>
                 </li>
                 @endforeach
             </ul>
