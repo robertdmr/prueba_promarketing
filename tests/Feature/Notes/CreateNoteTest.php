@@ -12,10 +12,11 @@ test('el usuario autenticado puede crear notas', function () {
 
     $this->actingAs($usuarioAutenticado);
 
-    Livewire::test('notes.index')
+    Livewire::test('notes.form')
         ->set('newNoteUserId', (string) $usuarioDestino->id)
         ->set('newNoteContent', 'Nota de prueba creada por usuario autenticado')
         ->call('createNote')
+        ->assertDispatched('noteCreated')
         ->assertSet('newNoteUserId', '')
         ->assertSet('newNoteContent', '');
 
